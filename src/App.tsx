@@ -1,11 +1,11 @@
 import LocationList from './components/LocationList';
-import Map from './components/Map';
+import WorldMap from './components/WorldMap';
 import 'leaflet/dist/leaflet.css';
 
 function App() {
   return (
     <div>
-      <Map />
+      <WorldMap />
       <LocationList />
     </div>
   );

@@ -4,15 +4,17 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 type Location = {
   id: number;
   lat: number;
-  lon: number;
+  long: number;
 };
 
 interface LocationsState {
   locations: Location[];
+  userLocation?: Location;
 }
 
 const initialState: LocationsState = {
   locations: [],
+  userLocation: undefined,
 };
 
 export const locationsSlice = createSlice({
@@ -25,12 +27,12 @@ export const locationsSlice = createSlice({
     update: (state, action: PayloadAction<Location[]>) => {
       state.locations = action.payload;
     },
-    addLocation: (state, action: PayloadAction<Location>) => {
-      state.locations = [...state.locations, action.payload];
+    addUserLocation: (state, action: PayloadAction<Location>) => {
+      state.userLocation = action.payload;
     },
   },
 });
 
-export const { reset, update, addLocation } = locationsSlice.actions;
+export const { reset, update, addUserLocation } = locationsSlice.actions;
 
 export default locationsSlice.reducer;
