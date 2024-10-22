@@ -1,25 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
-import L, { LatLngExpression } from 'leaflet';
-
-type Location = {
-  id: number;
-  lat: number;
-  long: number;
-};
+import { getDistanceFromUser, readStream } from '../helpers';
 
 interface Props {
-  location: Location;
+  location: State.Location;
 }
 
 const EntityMarker = ({ location }: Props) => {
-  const [entityDetails, setEntityDetails] = useState<any>(null);
+  const [entityDetails, setEntityDetails] =
+    useState<State.EntityDetails | null>(null);
 
   const { userLocation } = useSelector((state: RootState) => state.locations);
 
-  console.log('entityDetails', entityDetails);
-
+  /**
+   * Fetches entity details by id and updates the data to component state.
+   * @param id entity id
+   * @returns void
+   */
   const fetchEntityDetails = async (id: number) => {
     const res = await fetch(
       `https://akabab.github.io/starwars-api/api/id/${id}.json`,
@@ -42,37 +40,10 @@ const EntityMarker = ({ location }: Props) => {
     return null;
   };
 
-  const readStream = async (res: Response) => {
-    const reader = res?.body?.getReader();
-    const decoder = new TextDecoder('utf-8');
-    let result = '';
-    let done = false;
-
-    if (!reader) {
-      return null;
-    }
-
-    while (!done) {
-      const { value, done: streamDone } = await reader.read();
-      done = streamDone;
-      result += decoder.decode(value, { stream: true });
-    }
-    return result;
-  };
-
-  const getDistanceFromUser = () => {
-    if (!userLocation) {
-      return null;
-    }
-    const entityLoc = L.latLng(location.lat, location.long);
-    const userLoc = L.latLng(userLocation.lat, userLocation.long);
-    const distance = entityLoc.distanceTo(userLoc);
-    return (distance / 1000).toFixed(2);
-  };
-
   useEffect(() => {
     fetchEntityDetails(location.id);
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userLocation]);
 
   return (
     <div
@@ -82,11 +53,13 @@ const EntityMarker = ({ location }: Props) => {
     >
       <p>Id: {location.id}</p>
       {entityDetails && (
-        <>
+        <Fragment>
           <p>Name: {entityDetails.name}</p>
-          <p>Distance to user: {getDistanceFromUser()} km</p>
+          <p>
+            Distance to user: {getDistanceFromUser(location, userLocation)} km
+          </p>
           <img src={entityDetails.image} width="50" height="50" />
-        </>
+        </Fragment>
       )}
     </div>
   );

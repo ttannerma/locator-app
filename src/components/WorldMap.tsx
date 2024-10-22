@@ -10,6 +10,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { addUserLocation } from '../redux/locationsSlice';
 
+/**
+ * Handles setting user location when clicking map
+ */
 const MapEvents = () => {
   const dispatch = useDispatch();
   useMapEvents({
@@ -47,9 +50,8 @@ const WorldMap = () => {
         />
         {userLocation &&
           locations.map((loc) => (
-            <Marker position={[loc.lat, loc.long]}>
-              <Popup>TODO: add text</Popup>
-            </Marker>
+            <Marker position={[loc.lat, loc.long]} key={`${loc.id}`}/>
+
           ))}
 
         {userLocation && (
