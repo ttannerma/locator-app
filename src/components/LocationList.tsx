@@ -1,7 +1,12 @@
-import { useEffect, useState } from 'react';
-
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
+import { update } from '../redux/locationsSlice';
 const LocationList = () => {
-  const [locations, setLocations] = useState([]);
+  const locations = useSelector((state: RootState) => state.locations);
+  const dispatch = useDispatch();
+
+  console.log('locations', locations);
 
   const decodeBase64 = (encodedStr: string) => {
     try {
@@ -44,14 +49,14 @@ const LocationList = () => {
       const decodedMessageInJson = JSON.parse(decodedMessage ?? '');
 
       if (decodedMessageInJson && decodedMessageInJson.length > 0) {
-        setLocations(decodedMessageInJson);
+        dispatch(update(decodedMessageInJson));
       }
     }
   };
 
   useEffect(() => {
     fetchLocations();
-  });
+  }, []);
 
   return <div>{}</div>;
 };
