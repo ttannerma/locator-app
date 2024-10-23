@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
-import { getDistanceFromUser, readStream } from '../helpers';
+import { getDistanceFromUser, readStream } from '../helpers/helpers';
 
 interface Props {
   location: State.Location;
@@ -44,7 +44,7 @@ const EntityDetails = ({ location, nth }: Props) => {
   useEffect(() => {
     fetchEntityDetails(location.id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userLocation]);
+  }, []);
 
   return (
     <div>

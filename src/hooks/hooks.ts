@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-import { readStream, decodeBase64 } from './helpers';
+import { readStream, decodeBase64 } from '../helpers/helpers';
 import { useDispatch } from 'react-redux';
-import { update } from './redux/locationsSlice';
+import { update } from '../redux/locationsSlice';
 
 /**
  * Fetches locations and adds them to redux state.

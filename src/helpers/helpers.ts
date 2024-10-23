@@ -1,8 +1,12 @@
 import L from 'leaflet';
 
+/**
+ * Decodes base64 string to string format
+ * @param encodedStr
+ * @returns decoded string
+ */
 export const decodeBase64 = (encodedStr: string) => {
   try {
-    // Decode the base64 string to readable text
     const decoded = atob(encodedStr);
     return decoded;
   } catch (error) {
@@ -10,6 +14,11 @@ export const decodeBase64 = (encodedStr: string) => {
   }
 };
 
+/**
+ * Reads stream and returns it in string format
+ * @param res Response object from API
+ * @returns decoded stream in string format
+ */
 export const readStream = async (res: Response) => {
   const reader = res?.body?.getReader();
   const decoder = new TextDecoder('utf-8');
@@ -28,6 +37,10 @@ export const readStream = async (res: Response) => {
   return result;
 };
 
+/**
+ * GETs locations from API, decodes it and returns the decoded message in JSON
+ * @returns Decoded message in JSON
+ */
 export const fetchLocations = async () => {
   const res = await fetch(
     'https://aseevia.github.io/star-wars-frontend/data/secret.json',
@@ -58,6 +71,12 @@ export const fetchLocations = async () => {
   }
 };
 
+/**
+ * Gets distance between user and entity
+ * @param entityLocation
+ * @param userLocation
+ * @returns Distance in kilometers with two decimals
+ */
 export const getDistanceFromUser = (
   entityLocation: State.Location,
   userLocation?: State.Location
@@ -67,10 +86,16 @@ export const getDistanceFromUser = (
   }
   const entityLoc = L.latLng(entityLocation.lat, entityLocation.long);
   const userLoc = L.latLng(userLocation.lat, userLocation.long);
-  const distance = entityLoc.distanceTo(userLoc);
-  return (distance / 1000).toFixed(2);
+  const distance = entityLoc.distanceTo(userLoc); // distance in meters
+  return (distance / 1000).toFixed(2); // convert to kilometers with two decimals
 };
 
+/**
+ * Sort locations by users distance
+ * @param locations entity locations
+ * @param userLocation
+ * @returns sorted locations
+ */
 export const getSortedLocationsByUserDistance = (
   locations: State.Location[],
   userLocation?: State.Location

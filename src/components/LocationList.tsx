@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import EntityDetails from './EntityDetails';
-import { useGetAndSetLocations } from '../hooks';
-import { getSortedLocationsByUserDistance } from '../helpers';
+import { useGetAndSetLocations } from '../hooks/hooks';
+import { getSortedLocationsByUserDistance } from '../helpers/helpers';
 
 const LocationList = () => {
   const { locations, userLocation } = useSelector(
