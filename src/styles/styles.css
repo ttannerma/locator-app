@@ -1,7 +1,11 @@
 body {
   background-color: black;
+  font-family: Arial, sans-serif;
+  color: white;
 }
 
+
+/* ENTITY LIST */
 @media (max-width: 900px){
   .entity-list-wrapper {
     display: grid;
@@ -24,11 +28,14 @@ body {
   }
 }
 
+.guide-text {
+  text-align: center;
+}
+
+/* ENTITY DETAILS*/
 .entity-details-wrapper {
-    font-family: Arial, sans-serif;
     display: flex;
     border-bottom: 1px solid black;
-    color: white;
 }
 
 .entity-details-image-wrapper {

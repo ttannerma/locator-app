@@ -18,6 +18,10 @@ const LocationList = () => {
     userLocation
   );
 
+  if (!userLocation) {
+    return <h1 className="guide-text">Click on the map to view entities!</h1>;
+  }
+
   return (
     <div className="entity-list-wrapper">
       {userLocation &&
