@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
-import EntityMarker from './EntityMarker';
+import EntityDetails from './EntityDetails';
 import { useGetAndSetLocations } from '../hooks';
 import { getSortedLocationsByUserDistance } from '../helpers';
 
@@ -23,12 +23,15 @@ const LocationList = () => {
       style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(2, 1fr)',
-        border: '1px solid red',
       }}
     >
       {userLocation &&
-        sortedLocations.map((loc) => (
-          <EntityMarker location={loc} key={`entity_marker_${loc.id}`} />
+        sortedLocations.map((loc, i) => (
+          <EntityDetails
+            location={loc}
+            nth={i}
+            key={`entity_details_${loc.id}`}
+          />
         ))}
     </div>
   );

@@ -1,13 +1,14 @@
-import { Fragment, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { getDistanceFromUser, readStream } from '../helpers';
 
 interface Props {
   location: State.Location;
+  nth: number;
 }
 
-const EntityMarker = ({ location }: Props) => {
+const EntityDetails = ({ location, nth }: Props) => {
   const [entityDetails, setEntityDetails] =
     useState<State.EntityDetails | null>(null);
 
@@ -46,23 +47,47 @@ const EntityMarker = ({ location }: Props) => {
   }, [userLocation]);
 
   return (
-    <div
-      style={{
-        border: '1px solid black',
-      }}
-    >
-      <p>Id: {location.id}</p>
+    <div>
       {entityDetails && (
-        <Fragment>
-          <p>Name: {entityDetails.name}</p>
-          <p>
-            Distance to user: {getDistanceFromUser(location, userLocation)} km
-          </p>
-          <img src={entityDetails.image} width="50" height="50" />
-        </Fragment>
+        <div
+          style={{
+            fontFamily: 'Arial, sans-serif',
+            display: 'flex',
+            borderBottom: '1px solid black',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              margin: '1rem',
+            }}
+          >
+            <p
+              style={{
+                fontWeight: 'bold',
+                fontSize: '20px',
+                marginRight: '1rem',
+              }}
+            >{`${nth + 1}.`}</p>
+            <img
+              src={entityDetails.image}
+              width="50"
+              height="50"
+              style={{ borderRadius: '50%' }}
+            />
+          </div>
+          <div style={{}}>
+            <p style={{ fontWeight: 'bold' }}>{entityDetails.name}</p>
+            <p>
+              Distance from user: {getDistanceFromUser(location, userLocation)}{' '}
+              km
+            </p>
+          </div>
+        </div>
       )}
     </div>
   );
 };
 
-export default EntityMarker;
+export default EntityDetails;
