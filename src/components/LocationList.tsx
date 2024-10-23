@@ -19,12 +19,7 @@ const LocationList = () => {
   );
 
   return (
-    <div
-      style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(2, 1fr)',
-      }}
-    >
+    <div className="entity-list-wrapper">
       {userLocation &&
         sortedLocations.map((loc, i) => (
           <EntityDetails

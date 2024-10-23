@@ -49,39 +49,21 @@ const EntityDetails = ({ location, nth }: Props) => {
   return (
     <div>
       {entityDetails && (
-        <div
-          style={{
-            fontFamily: 'Arial, sans-serif',
-            display: 'flex',
-            borderBottom: '1px solid black',
-          }}
-        >
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              margin: '1rem',
-            }}
-          >
-            <p
-              style={{
-                fontWeight: 'bold',
-                fontSize: '20px',
-                marginRight: '1rem',
-              }}
-            >{`${nth + 1}.`}</p>
+        <div className="entity-details-wrapper">
+          <div className="entity-details-image-wrapper">
+            <p className="nth">{`${nth + 1}.`}</p>
             <img
               src={entityDetails.image}
               width="50"
               height="50"
-              style={{ borderRadius: '50%' }}
+              className="entity-image"
             />
           </div>
-          <div style={{}}>
-            <p style={{ fontWeight: 'bold' }}>{entityDetails.name}</p>
+          <div>
+            <p className="bold">{entityDetails.name}</p>
             <p>
-              Distance from user: {getDistanceFromUser(location, userLocation)}{' '}
-              km
+              Distance from user: {getDistanceFromUser(location, userLocation)}
+              &nbsp;km
             </p>
           </div>
         </div>
