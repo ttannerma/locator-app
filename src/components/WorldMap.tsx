@@ -9,6 +9,8 @@ import 'leaflet/dist/leaflet.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { addUserLocation } from '../redux/locationsSlice';
+import L from 'leaflet';
+import userIconImage from '../assets/user-icon.png';
 
 /**
  * Handles setting user location when clicking map
@@ -29,10 +31,21 @@ const MapEvents = () => {
   return null;
 };
 
+const UserIcon = L.Icon.extend({
+  options: {
+    iconUrl: userIconImage,
+    iconSize: [38, 40],
+    iconAnchor: [22, 40],
+    popupAnchor: [-3, -30],
+  },
+});
+
 const WorldMap = () => {
   const { locations, userLocation } = useSelector(
     (state: RootState) => state.locations
   );
+
+  const userIcon = new UserIcon();
 
   return (
     <div>
@@ -50,12 +63,14 @@ const WorldMap = () => {
         />
         {userLocation &&
           locations.map((loc) => (
-            <Marker position={[loc.lat, loc.long]} key={`${loc.id}`}/>
-
+            <Marker position={[loc.lat, loc.long]} key={`${loc.id}`} />
           ))}
 
         {userLocation && (
-          <Marker position={[userLocation.lat, userLocation.long]}>
+          <Marker
+            position={[userLocation.lat, userLocation.long]}
+            icon={userIcon}
+          >
             <Popup>This is you</Popup>
           </Marker>
         )}
